@@ -1,5 +1,5 @@
 {
-  "name": "bencharmk-react-redux-perf",
+  "name": "benchmark-react-redux-perf",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,5 +24,10 @@
       "not op_mini all",
       "ie 11"
     ]
+  },
+  "devDependencies": {
+    "cross-spawn": "^6.0.5",
+    "puppeteer": "^1.6.2",
+    "tracealyzer": "^0.9.3"
   }
 }
