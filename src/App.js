@@ -1,28 +1,59 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {connect} from "react-redux";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+import {fillPairs, updatePair} from "./pairActions";
+
+import Pair from "./Pair";
+
+function mapState(state) {
+    const partition = Math.floor(state.length / 3)
+
+    return {
+        groups: [
+            state.slice(0, partition),
+            state.slice(partition, partition * 2),
+            state.slice(partition * 2)
+        ]
+    }
 }
 
-export default App;
+const actions = {fillPairs, updatePair};
+
+class App extends React.Component {
+    componentDidMount =  () => {
+        this.props.fillPairs()
+        this.simulate()
+    }
+
+    simulate = () => {
+        setInterval(this.props.updatePair, 13)
+
+        setInterval(this.props.updatePair, 21)
+
+        setInterval(this.props.updatePair, 34)
+
+        setInterval(this.props.updatePair, 55)
+    }
+
+    render () {
+        return (
+            <div className='row'>
+                {this.props.groups.map((group, idx) => {
+                    return (
+                        <div className='col-lg-4' key={idx}>
+                            <ul className='list-group'>
+                                {group.map((pair) => {
+                                    return (
+                                        <Pair key={pair.id} id={pair.id} />
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
+}
+
+export default connect(mapState, actions)(App);

@@ -10,6 +10,7 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -20,12 +21,14 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+
+
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+    <div class="container" id="root"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -36,5 +39,22 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <script>
+        (function() {
+            var script = document.createElement('script')
+            script.onload = function() {
+                var stats = new Stats()
+                stats.showPanel(1)
+                document.body.appendChild(stats.dom)
+                requestAnimationFrame(function loop() {
+                    stats.update()
+                    requestAnimationFrame(loop)
+                })
+            }
+            script.src = 'http://rawgit.com/mrdoob/stats.js/master/build/stats.min.js'
+            document.head.appendChild(script)
+        })()
+    </script>
   </body>
 </html>
