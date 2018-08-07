@@ -5,6 +5,8 @@ const spawn = require("cross-spawn");
 
 const TRACE_FILE = 'trace.json';
 
+const timeout = ms => new Promise(res => setTimeout(res, ms))
+
 
 const runBuildTask = spawn.sync('npm', ['run', 'build'], {
     stdio: 'inherit',
@@ -24,6 +26,9 @@ app.listen(9999, async () => {
     const page = await browser.newPage();
     await page.tracing.start({path: TRACE_FILE});
     await page.goto('http://localhost:9999');
+
+    await timeout(30000);
+
     await page.tracing.stop();
 
     await browser.close();
