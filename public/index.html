@@ -40,21 +40,6 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
-    <script>
-        (function() {
-            var script = document.createElement('script')
-            script.onload = function() {
-                var stats = new Stats()
-                stats.showPanel(1)
-                document.body.appendChild(stats.dom)
-                requestAnimationFrame(function loop() {
-                    stats.update()
-                    requestAnimationFrame(loop)
-                })
-            }
-            script.src = 'http://rawgit.com/mrdoob/stats.js/master/build/stats.min.js'
-            document.head.appendChild(script)
-        })()
-    </script>
+
   </body>
 </html>
