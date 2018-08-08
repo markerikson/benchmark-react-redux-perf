@@ -24,18 +24,33 @@ app.listen(9999, async () => {
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.tracing.start({path: TRACE_FILE});
+
+    await page.evaluate(() => performance.setResourceTimingBufferSize(100000));
+    //await page.tracing.start({path: TRACE_FILE});
+
+
     await page.goto('http://localhost:9999');
 
     await timeout(30000);
 
-    await page.tracing.stop();
+    //await page.tracing.stop();
+
+    const perfEntries = JSON.parse(
+        await page.evaluate(() => JSON.stringify(performance.getEntries()))
+    );
+
+    const fpsStatsEntries = JSON.parse(
+        await page.evaluate(() => JSON.stringify(window.getFpsStats()))
+    );
 
     await browser.close();
 
-    const metrics = tracealyzer(TRACE_FILE);
+    const fpsValues = fpsStatsEntries.map(entry => entry.meta.details.FPS);
+    console.log(fpsValues);
 
-    console.log(metrics);
+    //const metrics = tracealyzer(TRACE_FILE);
+
+    //console.log(metrics);
 
     process.exit(0);
 });
