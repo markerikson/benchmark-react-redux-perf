@@ -76,6 +76,17 @@ app.listen(9999, async () => {
         const sourceFilename = `react-redux-${version}.min.js`;
         fs.copyFileSync(sourceFilename, "build/react-redux.min.js");
 
+        const outputSourcemapFilename = "build/react-redux.min.js.map";
+        if(fs.existsSync(outputSourcemapFilename)) {
+            fs.unlinkSync(outputSourcemapFilename);
+        }
+
+        const sourcemapFilename = sourceFilename + ".map";
+
+        if(fs.existsSync(sourcemapFilename)) {
+            fs.copyFileSync(sourcemapFilename, outputSourcemapFilename);
+        }
+
 
 
         console.log(`Checking max FPS for version ${version}...`)
