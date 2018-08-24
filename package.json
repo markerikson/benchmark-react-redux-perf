@@ -19,7 +19,7 @@
     "test": "react-app-rewired  --env=jsdom",
     "eject": "react-scripts eject",
     "test:e2e": "jest --watch",
-    "perf" : "node perfBenchmark.js"
+    "perf": "node perfBenchmark.js"
   },
   "browserslist": {
     "development": [
@@ -34,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "cli-table2": "^0.2.0",
     "cross-spawn": "^6.0.5",
     "puppeteer": "^1.6.2",
     "react-app-rewired": "^1.5.2",
