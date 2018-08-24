@@ -2,6 +2,7 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 const tracealyzer = require('tracealyzer');
 const spawn = require("cross-spawn");
+const Table = require("cli-table2");
 
 const fs = require("fs");
 
@@ -199,15 +200,30 @@ app.listen(9999, async () => {
 
     await browser.close();
 
-    Object.keys(versionPerfEntries).sort().forEach(version => {
-        const versionResults = versionPerfEntries[version];
 
+    const table = new Table({
+        head: ['Build', 'Avg FPS', 'Scripting', 'Rendering', 'Painting', 'FPS Values']
+    });
+
+    const rows = VERSIONS.map(version => {
+        const versionResults = versionPerfEntries[version];
         const {fps, profile} = versionResults;
 
-        console.log(version);
-        console.log("  FPS (average, values): ", fps.average, "; ", fps.values);
-        console.log("  Profile: ", profile)
-    })
+        const rowContents = [
+            version,
+            fps.average.toFixed(2),
+            profile.scripting.toFixed(2),
+            profile.rendering.toFixed(2),
+            profile.painting.toFixed(2),
+            fps.values.toString()
+        ]
+
+        return rowContents;
+    });
+
+    table.push(...rows);
+
+    console.log(table.toString());
 
 
     process.exit(0);
